@@ -1,1 +1,1 @@
-C:\CSD2101-Android-Sandbox\AndroidProgrammingQuiz-CrossPlatformCI\android\app\src\main\cpp\CMakeLists.txt
+C:\SIT-Digipen\Graphics(CSD2101)\Android\AndroidProgrammingQuiz-CrossPlatformCI\android\app\src\main\cpp\CMakeLists.txt

@@ -1,21 +1,28 @@
 #define LOG_TAG "Square"
 
-/*!***************************************************************************
- * \file   Square.cpp
- * \author zijian.tan@digipen.edu
- * \brief  Implementation of the Square Model. Renders a solid yellow square
- *         offset to the right of the triangle in clip space so both shapes
- *         are clearly visible simultaneously.
- *****************************************************************************/
+/**
+ * Square.cpp
+ *
+ * Author: Muhammad Abdullah Bin Ahmad
+ *
+ * Initializes and renders a static yellow square in the top-right corner.
+ */
 
-#include "Square.h"
 #include "ShaderHelper.h"
+#include "Square.h"
 
-static const GLfloat SquarePositions[] = {
-    0.62f,  0.85f,   // top-left
-    0.62f,  0.45f,   // bottom-left
-    0.97f,  0.45f,   // bottom-right
-    0.97f,  0.85f,   // top-right
+static const GLfloat kPositions[] = {
+     0.55f,  0.90f,
+     0.90f,  0.90f,
+     0.90f,  0.55f,
+     0.55f,  0.55f
+};
+
+static const GLfloat kColors[] = {
+    1.0f, 1.0f, 0.0f,
+    1.0f, 1.0f, 0.0f,
+    1.0f, 1.0f, 0.0f,
+    1.0f, 1.0f, 0.0f
 };
 
 #ifdef PLATFORM_ANDROID
@@ -26,6 +33,7 @@ Square::Square() = default;
 
 Square::~Square()
 {
+    glDeleteBuffers(1, &vboColor);
     glDeleteBuffers(1, &vboPos);
     glDeleteVertexArrays(1, &vao);
     glDeleteProgram(programID);
@@ -36,22 +44,30 @@ void Square::InitModel()
     LOGI("Square::InitModel");
 
 #ifdef PLATFORM_ANDROID
-    programID = ShaderHelper::buildProgramFromAssets(mgr, "shader/SquareVertex.glsl",
-                                                          "shader/SquareFragment.glsl");
+    programID = ShaderHelper::buildProgramFromAssets(
+        mgr, "shader/BlueTriangleVertex.glsl", "shader/BlueTriangleFragment.glsl");
 #else
-    programID = ShaderHelper::buildProgramFromFile("SquareVertex.glsl",
-                                                    "SquareFragment.glsl");
+    programID = ShaderHelper::buildProgramFromFile(
+        "BlueTriangleVertex.glsl", "BlueTriangleFragment.glsl");
 #endif
     if (!programID) { LOGE("Square: could not create program"); return; }
+
+    uRadianAngle = glGetUniformLocation(programID, "RadianAngle");
 
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
 
     glGenBuffers(1, &vboPos);
     glBindBuffer(GL_ARRAY_BUFFER, vboPos);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(SquarePositions), SquarePositions, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(kPositions), kPositions, GL_STATIC_DRAW);
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
+
+    glGenBuffers(1, &vboColor);
+    glBindBuffer(GL_ARRAY_BUFFER, vboColor);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(kColors), kColors, GL_STATIC_DRAW);
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 
     glBindVertexArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -62,6 +78,9 @@ void Square::InitModel()
 void Square::Render()
 {
     glUseProgram(programID);
+
+    glUniform1f(uRadianAngle, 0.0f);
+
     glBindVertexArray(vao);
     glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
     glBindVertexArray(0);

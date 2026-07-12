@@ -1,5 +1,6 @@
 @echo off
 REM =============================================================================
+REM Author: Muhammad Abdullah Bin Ahmad
 REM build_web.bat – Build GLPIFrameworkIntro-Modern for WebGL (Emscripten/Windows)
 REM
 REM Prerequisites:
@@ -23,9 +24,9 @@ IF NOT EXIST web MKDIR web
 REM --- GLFW backend (default) -----------------------------------------------
 emcc -std=c++17 ^
      Scene/main.cpp ^
-     Scene/Triangle.cpp ^
      Scene/Renderer.cpp ^
      Scene/Square.cpp ^
+     Scene/Triangle.cpp ^
      -IScene ^
      -DUSE_GLFW ^
      -s USE_GLFW=3 ^
@@ -40,9 +41,9 @@ REM --- SDL2 backend (opt-in) ------------------------------------------------
 REM To use SDL2 instead, comment out the GLFW block above and uncomment below:
 REM emcc -std=c++17 ^
 REM      Scene/main.cpp ^
-REM      Scene/Triangle.cpp ^
 REM      Scene/Renderer.cpp ^
 REM      Scene/Square.cpp ^
+REM      Scene/Triangle.cpp ^
 REM      -IScene ^
 REM      -s USE_SDL=2 ^
 REM      -s USE_WEBGL2=1 ^

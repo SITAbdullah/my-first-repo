@@ -1,10 +1,10 @@
 # ===========================================================================
-# CMakeLists.txt – Desktop (Windows) build for GLPIFrameworkIntro-Modern
+# CMakeLists.txt - Desktop (Windows) build for GLPIFrameworkIntro-Modern
 #
-# Scene/ holds: main.cpp (entry point), Triangle.cpp/.h (self-contained renderer),
-#               Platform.h (GL + windowing headers).
-# The same Triangle logic is mirrored as a monolithic JNI file for Android:
-#   android/app/src/main/cpp/NativeTemplate.cpp
+# Author: Muhammad Abdullah Bin Ahmad
+#
+# Scene/ holds the shared Model/Renderer/ShaderHelper code and concrete models.
+# Android enters through android/app/src/main/cpp/NativeTemplate.cpp.
 #
 # Usage:
 #   cmake -S . -B build_desktop -G "Visual Studio 17 2022" -A x64
@@ -27,7 +27,6 @@ importDependencies()
 add_definitions(-DPLATFORM_WINDOWS -DGLEW_STATIC)
 
 set(SCENE_DIR ${CMAKE_CURRENT_LIST_DIR}/Scene)
-# Triangle.cpp + main.cpp — no other .cpp files remain in Scene/.
 file(GLOB SCENE_SRC "${SCENE_DIR}/*.cpp")
 
 add_executable(GLPIFrameworkIntro ${SCENE_SRC})

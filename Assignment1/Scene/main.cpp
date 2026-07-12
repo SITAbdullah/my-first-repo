@@ -1,37 +1,41 @@
 /**
  * main.cpp
  *
+ * Author: Muhammad Abdullah Bin Ahmad
+ *
  * Entry point for Desktop (Windows/GLFW) and WebGL (Emscripten) builds.
  * Android uses NativeTemplate.cpp + JNI instead of this file.
  *
  * Emscripten supports two windowing backends (selected at compile time):
- *   USE_GLFW defined  → GLFW via -s USE_GLFW=3  (default, recommended)
- *   USE_GLFW absent   → SDL2 via -s USE_SDL=2
+ *   USE_GLFW defined GLFW via -s USE_GLFW=3  (default, recommended)
+ *   USE_GLFW absent SDL2 via -s USE_SDL=2
  *
- * The triangle rotates automatically – no user interaction required.
+ * The triangle rotates automatically no user interaction required.
  * This is the introductory GLPI Framework demo.
  *
- * Ported from OpenGL ES 3.0 Cookbook – Chapter 2, GLPI Framework Intro.
+ * Ported from OpenGL ES 3.0 Cookbook Chapter 2, GLPI Framework Intro.
  */
 
 #include "Platform.h"
 #include "Renderer.h"
 
-
+// ==========================================================================
+// WebGL / Emscripten
+// ==========================================================================
 #ifdef PLATFORM_EMSCRIPTEN
 
-
+// --------------------------------------------------------------------------
+// GLFW backend (default build with -DUSE_GLFW -s USE_GLFW=3)
+// --------------------------------------------------------------------------
 #ifdef USE_GLFW
 
 static GLFWwindow* g_window = nullptr;
 
-// Callback for window resize events (GLFW)
 static void fbsize_cb(GLFWwindow* /*win*/, int w, int h)
 {
     Renderer::Instance().resize(w, h);
 }
 
-// Main loop for GLFW / Emscripten
 static void main_loop()
 {
     if (glfwWindowShouldClose(g_window)) {
@@ -70,12 +74,14 @@ int main()
     return 0;
 }
 
+// --------------------------------------------------------------------------
+// SDL2 backend (opt-in build without -DUSE_GLFW, use -s USE_SDL=2)
+// --------------------------------------------------------------------------
 #else // !USE_GLFW
 
 static SDL_Window*   g_window = nullptr;
 static SDL_GLContext g_glctx  = nullptr;
 
-// Main loop for SDL2 / Emscripten
 static void main_loop()
 {
     SDL_Event ev;
@@ -96,12 +102,10 @@ int main()
         return -1;
     }
 
-    // Set up OpenGL ES 3.0 context (SDL2)
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
 
-    // Create window and OpenGL context
     g_window = SDL_CreateWindow(
         "GLPI Framework Intro",
         SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
@@ -121,6 +125,9 @@ int main()
 
 #endif // USE_GLFW
 
+// ==========================================================================
+// Desktop Windows / GLFW
+// ==========================================================================
 #elif defined(PLATFORM_WINDOWS)
 
 #include <iostream>
@@ -137,7 +144,6 @@ int main()
 
     if (!glfwInit()) { std::cerr << "glfwInit failed\n"; return -1; }
 
-    // Set up OpenGL ES 3.0 context (GLFW)
     glfwWindowHint(GLFW_CLIENT_API,            GLFW_OPENGL_ES_API);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
@@ -150,24 +156,19 @@ int main()
         return -1;
     }
 
-    // Set up OpenGL context and GLEW
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1);
 
-    // Initialize GLEW (required for OpenGL function pointers)
     glewExperimental = GL_TRUE;
     if (glewInit() != GLEW_OK) { std::cerr << "glewInit failed\n"; return -1; }
 
-    // Set up framebuffer size callback for window resizing
     glfwSetFramebufferSizeCallback(window, framebufferSizeCB);
 
-    // Initialize the renderer and model
     Renderer::Instance().initializeRenderer();
     int w, h;
     glfwGetFramebufferSize(window, &w, &h);
     Renderer::Instance().resize(w, h);
 
-    // Main loop
     while (!glfwWindowShouldClose(window)) {
         if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
             glfwSetWindowShouldClose(window, GLFW_TRUE);

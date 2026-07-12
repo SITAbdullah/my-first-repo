@@ -5,9 +5,9 @@
  *
  * Single-header platform detection for the GLPI Framework Intro demo.
  * Supports three targets:
- *   PLATFORM_EMSCRIPTEN  – WebGL 2.0 via Emscripten + SDL2
- *   PLATFORM_WINDOWS     – OpenGL (ES compat) via GLFW + GLEW
- *   PLATFORM_ANDROID     – OpenGL ES 3.0 via Android NDK
+ *   PLATFORM_EMSCRIPTEN   WebGL 2.0 via Emscripten + SDL2
+ *   PLATFORM_WINDOWS      OpenGL (ES compat) via GLFW + GLEW
+ *   PLATFORM_ANDROID      OpenGL ES 3.0 via Android NDK
  *
  * IMPORTANT: Emscripten must be detected BEFORE Windows because emcc
  * defines both __EMSCRIPTEN__ AND _WIN32 on some toolchain setups.
@@ -23,12 +23,12 @@
 
 #ifdef PLATFORM_EMSCRIPTEN
     #ifdef USE_GLFW
-        // GLFW path – Emscripten provides GLFW when built with -s USE_GLFW=3.
+        // GLFW path Emscripten provides GLFW when built with -s USE_GLFW=3.
         // GLFW_INCLUDE_ES3 tells glfw3.h to pull in <GLES3/gl3.h> automatically.
         #define GLFW_INCLUDE_ES3
         #include <GLFW/glfw3.h>
     #else
-        // SDL2 path – built with -s USE_SDL=2
+        // SDL2 path built with -s USE_SDL=2
         #include <GLES3/gl3.h>
         #include <SDL2/SDL.h>
     #endif

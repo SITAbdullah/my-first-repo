@@ -1,9 +1,20 @@
 #define LOG_TAG "Triangle"
 
-#include "Triangle.h"
+/**
+ * Triangle.cpp
+ *
+ * Author: Muhammad Abdullah Bin Ahmad
+ *
+ * Initializes and renders the rotating RGB triangle model.
+ */
+
 #include "ShaderHelper.h"
+#include "Triangle.h"
 #include <cmath>
-#include <string>
+
+// ---------------------------------------------------------------------------
+// Vertex data
+// ---------------------------------------------------------------------------
 
 static const GLfloat kPositions[] = {
      0.0f,  0.5f,
@@ -17,10 +28,14 @@ static const GLfloat kColors[] = {
     0.0f, 0.0f, 1.0f
 };
 
+// ---------------------------------------------------------------------------
+// Triangle
+// ---------------------------------------------------------------------------
+
 #ifdef PLATFORM_ANDROID
 Triangle::Triangle(AAssetManager* assetMgr) : mgr(assetMgr) {}
 #else
-Triangle::Triangle() = default;
+Triangle::Triangle()  = default;
 #endif
 
 Triangle::~Triangle()
@@ -36,11 +51,11 @@ void Triangle::InitModel()
     LOGI("Triangle::InitModel");
 
 #ifdef PLATFORM_ANDROID
-    programID = ShaderHelper::buildProgramFromAssets(mgr, "shader/BlueTriangleVertex.glsl",
-                                                            "shader/BlueTriangleFragment.glsl");
+    programID = ShaderHelper::buildProgramFromAssets(
+        mgr, "shader/BlueTriangleVertex.glsl", "shader/BlueTriangleFragment.glsl");
 #else
-    programID = ShaderHelper::buildProgramFromFile("BlueTriangleVertex.glsl",
-                                                     "BlueTriangleFragment.glsl");
+    programID = ShaderHelper::buildProgramFromFile(
+        "BlueTriangleVertex.glsl", "BlueTriangleFragment.glsl");
 #endif
     if (!programID) { LOGE("Triangle: could not create program"); return; }
 
@@ -69,9 +84,6 @@ void Triangle::InitModel()
 
 void Triangle::Render()
 {
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
-
     glUseProgram(programID);
 
     float radian = degree++ / 57.2957795f;
