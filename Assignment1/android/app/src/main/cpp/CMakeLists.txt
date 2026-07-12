@@ -1,8 +1,5 @@
 cmake_minimum_required(VERSION 3.22.1)
 
-# Android native build for the shared scene renderer.
-# Author: Muhammad Abdullah Bin Ahmad
-
 project("glpiframeworkintro")
 
 set(CMAKE_CXX_STANDARD          17)
@@ -18,9 +15,9 @@ set(SCENE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../../../../../Scene)
 
 add_library(glpiframeworkintro SHARED
     NativeTemplate.cpp
+    ${SCENE_DIR}/Triangle.cpp
     ${SCENE_DIR}/Renderer.cpp
     ${SCENE_DIR}/Square.cpp
-    ${SCENE_DIR}/Triangle.cpp
 )
 
 target_include_directories(glpiframeworkintro PRIVATE

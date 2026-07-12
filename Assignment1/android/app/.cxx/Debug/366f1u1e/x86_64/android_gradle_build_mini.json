@@ -1,0 +1,27 @@
+{
+  "buildFiles": [
+    "C:\\CSD2101-Android-Sandbox\\AndroidProgrammingQuiz-CrossPlatformCI\\android\\app\\src\\main\\cpp\\CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "C:\\Android\\Sdk\\cmake\\3.22.1\\bin\\ninja.exe",
+      "-C",
+      "C:\\CSD2101-Android-Sandbox\\AndroidProgrammingQuiz-CrossPlatformCI\\android\\app\\.cxx\\Debug\\366f1u1e\\x86_64",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "C:\\Android\\Sdk\\cmake\\3.22.1\\bin\\ninja.exe",
+    "-C",
+    "C:\\CSD2101-Android-Sandbox\\AndroidProgrammingQuiz-CrossPlatformCI\\android\\app\\.cxx\\Debug\\366f1u1e\\x86_64",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {
+    "glpiframeworkintro::@6890427a1f51a3e7e1df": {
+      "artifactName": "glpiframeworkintro",
+      "abi": "x86_64",
+      "output": "C:\\CSD2101-Android-Sandbox\\AndroidProgrammingQuiz-CrossPlatformCI\\android\\app\\build\\intermediates\\cxx\\Debug\\366f1u1e\\obj\\x86_64\\libglpiframeworkintro.so",
+      "runtimeFiles": []
+    }
+  }
+}

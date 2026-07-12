@@ -1,13 +1,12 @@
 #pragma once
 
-/**
- * Renderer.h
- *
- * Author: Muhammad Abdullah Bin Ahmad
- *
- * Singleton scene controller that owns renderable models through the Model
- * interface, keeping platform entry points independent from concrete shapes.
- */
+/*!***************************************************************************
+ * \file   Renderer.h
+ * \brief  Singleton controller that owns the active Model(s) and is the
+ *         only class main.cpp / NativeTemplate.cpp talk to. Does not know
+ *         about Triangle or Square directly (only Model*) so new shapes
+ *         can be added without touching this header.
+ *****************************************************************************/
 
 #include "Model.h"
 #include <vector>
@@ -19,7 +18,6 @@
 class Renderer {
 public:
     static Renderer& Instance();
-
     Renderer(const Renderer&) = delete;
     Renderer& operator=(const Renderer&) = delete;
 
@@ -34,6 +32,7 @@ public:
 private:
     Renderer() = default;
     ~Renderer();
+
     void createModels();
     void initializeModels();
     void clearModels();
@@ -42,5 +41,5 @@ private:
     AAssetManager* assetMgr = nullptr;
 #endif
 
-    std::vector<Model*> models;
+    std::vector<Model*> models; // replaces the single Model* model
 };

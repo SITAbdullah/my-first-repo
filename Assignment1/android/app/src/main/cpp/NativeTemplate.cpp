@@ -1,9 +1,10 @@
 /**
  * NativeTemplate.cpp
  *
- * Author: Muhammad Abdullah Bin Ahmad
- *
- * Thin JNI bridge between the Java/Android layer and the shared scene renderer.
+ * Thin JNI bridge between the Java/Android layer and the Renderer
+ * singleton. Converts the Java AAssetManager into its native pointer
+ * form and hands it to Renderer before initialization, since Triangle
+ * (and later Square) need it to read .glsl shader files out of the APK.
  *
  * Native method signatures match MainActivity.java:
  *   package com.example.glpiframeworkintro
@@ -14,8 +15,8 @@
 
 #include <jni.h>
 #include <android/asset_manager_jni.h>
-#include "Platform.h"
 #include "Renderer.h"
+#include "Platform.h"
 
 // ---------------------------------------------------------------------------
 // JNI entry points

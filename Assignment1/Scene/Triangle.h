@@ -1,13 +1,10 @@
 #pragma once
 
-/**
- * Triangle.h
- *
- * Author: Muhammad Abdullah Bin Ahmad
- *
- * Concrete Model implementation for the rotating RGB triangle.
- * Shader compilation is delegated to ShaderHelper.
- */
+
+/*!***************************************************************************
+ * \file   Triangle.h
+ * \brief  Class representing a triangle model.
+ *****************************************************************************/
 
 #include "Platform.h"
 #include "Model.h"
@@ -33,10 +30,10 @@ private:
 #ifdef PLATFORM_ANDROID
     AAssetManager* mgr = nullptr;
 #endif
-    GLuint programID = 0;
-    GLuint vao = 0;
-    GLuint vboPos = 0;
-    GLuint vboColor = 0;
-    GLint uRadianAngle = -1;
-    float degree = 0.0f;
+    GLuint programID    = 0;
+    GLuint vao          = 0;
+    GLuint vboPos       = 0;
+    GLuint vboColor     = 0;
+    GLint  uRadianAngle = -1;
+    float  degree       = 0.0f;
 };

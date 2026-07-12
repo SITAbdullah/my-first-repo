@@ -1,72 +1,36 @@
-#define LOG_TAG "Renderer"
-
-/**
- * Renderer.cpp
- *
- * Author: Muhammad Abdullah Bin Ahmad
- *
- * Creates, initializes, resizes, renders, and clears the scene models.
- */
+/*!***************************************************************************
+ * \file   Renderer.cpp
+ * \brief  Implementation of the Renderer singleton.
+ *****************************************************************************/
 
 #include "Renderer.h"
-#include "Square.h"
 #include "Triangle.h"
+#include "Square.h"
 
-Renderer& Renderer::Instance()
-{
+Renderer& Renderer::Instance() {
     static Renderer instance;
     return instance;
 }
 
-Renderer::~Renderer()
-{
+Renderer::~Renderer() {
     clearModels();
 }
 
 #ifdef PLATFORM_ANDROID
-void Renderer::setAssetManager(AAssetManager* mgr)
-{
+void Renderer::setAssetManager(AAssetManager* mgr) {
     assetMgr = mgr;
 }
 #endif
 
-bool Renderer::initializeRenderer()
-{
-#ifdef PLATFORM_ANDROID
-    if (!assetMgr) {
-        LOGE("Renderer: asset manager is null");
-        return false;
+void Renderer::clearModels() {
+    for (Model* m : models) {
+        delete m;
     }
-#endif
-
-    createModels();
-    initializeModels();
-    return true;
+    models.clear();
 }
 
-void Renderer::resize(int w, int h)
-{
-    for (Model* model : models) {
-        model->Resize(w, h);
-    }
-}
-
-void Renderer::render()
-{
-    if (!models.empty()) {
-        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
-    }
-
-    for (Model* model : models) {
-        model->Render();
-    }
-}
-
-void Renderer::createModels()
-{
+void Renderer::createModels() {
     clearModels();
-
 #ifdef PLATFORM_ANDROID
     models.push_back(new Triangle(assetMgr));
     models.push_back(new Square(assetMgr));
@@ -76,17 +40,26 @@ void Renderer::createModels()
 #endif
 }
 
-void Renderer::initializeModels()
-{
-    for (Model* model : models) {
-        model->InitModel();
+void Renderer::initializeModels() {
+    for (Model* m : models) {
+        m->InitModel();
     }
 }
 
-void Renderer::clearModels()
-{
-    for (Model* model : models) {
-        delete model;
+bool Renderer::initializeRenderer() {
+    createModels();
+    initializeModels();
+    return !models.empty();
+}
+
+void Renderer::resize(int w, int h) {
+    for (Model* m : models) {
+        m->Resize(w, h);
     }
-    models.clear();
+}
+
+void Renderer::render() {
+    for (Model* m : models) {
+        m->Render();
+    }
 }

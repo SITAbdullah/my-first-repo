@@ -1,13 +1,10 @@
 #pragma once
 
-/**
- * Square.h
- *
- * Author: Muhammad Abdullah Bin Ahmad
- *
- * Concrete Model implementation for a colored square rendered beside the
- * triangle. The square owns its shader program, VAO, and VBOs.
- */
+/*!***************************************************************************
+ * \file   Square.h
+ * \brief  Concrete Model representing a solid-coloured square, rendered
+ *         alongside Triangle.
+ *****************************************************************************/
 
 #include "Platform.h"
 #include "Model.h"
@@ -34,9 +31,6 @@ private:
     AAssetManager* mgr = nullptr;
 #endif
     GLuint programID = 0;
-    GLuint vao = 0;
-    GLuint vboPos = 0;
-    GLuint vboColor = 0;
-    GLint uRadianAngle = -1;
-    float degree = 0.0f;
+    GLuint vao       = 0;
+    GLuint vboPos    = 0;
 };

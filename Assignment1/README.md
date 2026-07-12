@@ -1,36 +1,30 @@
-# Android Programming Quiz - Cross Platform CI
+# AndroidProgrammingQuiz-CrossPlatformCI
 
-Author: Muhammad Abdullah Bin Ahmad
+Cross-platform OpenGL ES 3.0 renderer displaying a rotating triangle and a yellow square.
+Runs on Desktop (Windows), Android, and Web (WebGL).
 
-This project builds the same shared OpenGL ES scene on Desktop, Android, and Web.
+## Build Instructions
 
-## Desktop
-
-From the project root:
-
+### Desktop (Windows)
+Run from project root:
 ```bat
 script_build_and_run.bat
 ```
+Press ESC to close.
 
-Press ESC to close the window.
+### Android
+Open the `android/` folder in Android Studio, sync, build, and run on an emulator or device.
 
-## Android
-
-Open the `android/` folder in Android Studio, sync Gradle, then run the app on an emulator or device.
-
-## Web
-
-Activate Emscripten first, then from the project root run:
-
+### Web
+Activate Emscripten first (adjust path to where you installed emsdk):
+```bat
+cd C:\emsdk
+emsdk_env.bat
+cd <back to project root>
+```
+Then build and serve:
 ```bat
 build_web.bat
+cd web && python -m http.server 8080
 ```
-
-Serve the generated files:
-
-```bat
-cd web
-python -m http.server 8080
-```
-
 Open `http://localhost:8080/` in a browser.

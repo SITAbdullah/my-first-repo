@@ -1,6 +1,5 @@
 #!/usr/bin/env sh
 # =============================================================================
-# Author: Muhammad Abdullah Bin Ahmad
 # build_web.sh – Build GLPIFrameworkIntro-Modern for WebGL using Emscripten
 #
 # Prerequisites:
@@ -23,9 +22,9 @@ mkdir -p web
 # --- GLFW backend (default) -------------------------------------------------
 emcc -std=c++17 \
     Scene/main.cpp \
+    Scene/Triangle.cpp \
     Scene/Renderer.cpp \
     Scene/Square.cpp \
-    Scene/Triangle.cpp \
     -IScene \
     -DUSE_GLFW \
     -s USE_GLFW=3 \
@@ -40,9 +39,9 @@ emcc -std=c++17 \
 # To use SDL2 instead, comment out the GLFW block above and uncomment below:
 # emcc -std=c++17 \
 #     Scene/main.cpp \
+#     Scene/Triangle.cpp \
 #     Scene/Renderer.cpp \
 #     Scene/Square.cpp \
-#     Scene/Triangle.cpp \
 #     -IScene \
 #     -s USE_SDL=2 \
 #     -s USE_WEBGL2=1 \
