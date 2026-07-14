@@ -44,6 +44,13 @@ jobs:
           bash build_web.sh
           mkdir -p ../site/Assignment1
           cp -r web/* ../site/Assignment1/
+
+      - name: Build Assignment 2
+        working-directory: Assignment2
+        run: |
+          bash build_web.sh
+          mkdir -p ../site/Assignment2
+          cp -r web/* ../site/Assignment2/
       - name: Generate index.html
         run: |
           cat > site/index.html << 'HTML'
@@ -61,6 +68,9 @@ jobs:
             <p>OpenGL primitives: point, line, and triangle with their variations.</p>
             <p><a href="Chapter2/2-OpenGLES3_Primitives-Modern/">Launch the demo</a></p>
             <p><a href="Assignment1/">Launch Assignment 1</a></p>
+
+            <h2>Assignment-2-3DFan</h2>
+            <p><a href="Assignment2/">Launch Assignment 2</a></p>
           </body>
           </html>
           HTML

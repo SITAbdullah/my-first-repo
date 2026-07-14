@@ -18,6 +18,8 @@ jobs:
           - { project: Chapter2/2-OpenGLES3_Primitives-Modern, name: 2-OpenGLES3_Primitives-Modern, os: windows-latest }
           - { project: Assignment1, name: Assignment1, os: ubuntu-latest  }
           - { project: Assignment1, name: Assignment1, os: windows-latest }
+          - { project: Assignment2, name: Assignment2, os: ubuntu-latest  }
+          - { project: Assignment2, name: Assignment2, os: windows-latest }
     steps:
       - uses: actions/checkout@v4
 
